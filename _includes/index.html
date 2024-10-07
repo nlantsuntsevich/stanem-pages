@@ -34,24 +34,23 @@
 </script> -->
 
 <script>
-  $(document).ready(function () {
+  window.onload = function () {
     const gallery = $('#gallery');
     
-    // Check if gallery is selected correctly
-    console.log(gallery);
-    
-    // Apply imagesLoaded to the gallery and check when all images are loaded
+    // Apply imagesLoaded to the gallery
     gallery.imagesLoaded()
       .done(function() {
         console.log('All images successfully loaded.');
+        // Initialize Masonry after all images are loaded
+        gallery.masonry({
+          itemSelector: ".mm-columns__item",
+          percentPosition: true,
+        });
       })
       .fail(function() {
         console.log('One or more images failed to load.');
-      })
-      .always(function() {
-        console.log('Images loaded (success or fail).');
       });
-  });
+  };
 </script>
 
 <div class="mm-columns" id="gallery">
