@@ -35,9 +35,13 @@
 
 <script>
   window.onload = function () {
-    const gallery = $('#gallery');
-    
-    // Apply imagesLoaded to the gallery
+  const gallery = $('#gallery');
+
+  console.log(gallery); // Check if #gallery exists
+  console.log(gallery.find('img')); // Check if images are present in #gallery
+
+  // Ensure there are images before applying imagesLoaded
+  if (gallery.find('img').length) {
     gallery.imagesLoaded()
       .done(function() {
         console.log('All images successfully loaded.');
@@ -50,7 +54,10 @@
       .fail(function() {
         console.log('One or more images failed to load.');
       });
-  };
+  } else {
+    console.log('No images found in the gallery.');
+  }
+};
 </script>
 
 <div class="mm-columns" id="gallery">
