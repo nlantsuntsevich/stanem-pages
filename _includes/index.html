@@ -1,47 +1,67 @@
 <script>
   document.addEventListener('DOMContentLoaded', function () {
+    const gallery = document.querySelector("#gallery");
     const lazyImages = document.querySelectorAll('img[data-src]');
+    const masonryContainer = $('#gallery');
+    
+    // Function to trigger Masonry layout recalculation
+    const triggerMasonry = () => {
+      masonryContainer.masonry('layout');
+    };
+
+    // Initialize Masonry after all images have loaded
+    masonryContainer.imagesLoaded(function () {
+      masonryContainer.masonry({
+        itemSelector: ".mm-columns__item",
+        percentPosition: true,
+      });
+    });
+
+    // Use IntersectionObserver to lazy-load images
     const imageObserver = new IntersectionObserver((entries, observer) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           const img = entry.target;
           img.src = img.dataset.src;
           img.removeAttribute('data-src');
-          
+
           img.onload = () => {
-            // Recalculate Masonry layout after the image is loaded
-            $('#gallery').masonry('layout');
+            triggerMasonry();  // Recalculate Masonry layout
           };
-          
-          observer.unobserve(img);
+
+          observer.unobserve(img);  // Stop observing once loaded
         }
       });
     });
 
+    // Observe each lazy image
     lazyImages.forEach(image => {
       imageObserver.observe(image);
     });
 
-    // Initialize Masonry after all images have loaded
-    $("#gallery").imagesLoaded(function () {
-      $(".mm-columns__item").masonry({
-        itemSelector: ".mm-columns__img",
-        percentPosition: true,
+    // Use MutationObserver to detect if any new images are added dynamically
+    const mutationObserver = new MutationObserver(() => {
+      const newLazyImages = document.querySelectorAll('img[data-src]');
+      newLazyImages.forEach(image => {
+        imageObserver.observe(image);
       });
     });
+
+    // Observe the gallery for changes (e.g., new images added)
+    mutationObserver.observe(gallery, { childList: true, subtree: true });
   });
 </script>
 
 <div class="mm-columns" id="gallery">
   {% for item in site.data.index %}
   <div class="mm-columns__item">
-    <a href="{{ item.src_url}}"  target="_blank">
+    <a href="{{ item.src_url}}" target="_blank">
       <img
         class="mm-columns__img"
         loading="lazy"
-        data-src="{{ item.src_url }}"
-        src="assets/images/tort.jpg"
-        onerror="this.src='assets/images/tort.jpg'"
+        data-src="{{ item.src_url }}"  <!-- Lazy-loaded image -->
+        src="assets/images/tort.jpg"  <!-- Placeholder image -->
+        onerror="this.src='assets/images/tort.jpg'"  <!-- Fallback image -->
         alt="{{ item.name }}"
       />
     </a>
