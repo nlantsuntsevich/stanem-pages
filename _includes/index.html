@@ -32,9 +32,10 @@
 <div class="mm-columns" id="gallery">
   {% for item in site.data.index %}
   <div class="mm-columns__item">
-    <a href="{{ item.src_url}}" target="_blank">
+    <a href="{{ item.src_url}}"  target="_blank">
       <img
         class="mm-columns__img"
+        loading="lazy"
         src="{{ item.src_url }}"
         alt="{{ item.name }}"
       />
