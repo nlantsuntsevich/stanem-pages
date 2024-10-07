@@ -1,4 +1,4 @@
-<!-- Initialize Masonry and Lazy Load Images -->
+<!-- Initialize Masonry and Lazy Load Images
 <script>
   $(document).ready(function () {
     const masonryContainer = $('#gallery');
@@ -31,6 +31,27 @@
       imageObserver.observe(image);
     });
   });
+</script> -->
+
+<script>
+  $(document).ready(function () {
+    const gallery = $('#gallery');
+    
+    // Check if gallery is selected correctly
+    console.log(gallery);
+    
+    // Apply imagesLoaded to the gallery and check when all images are loaded
+    gallery.imagesLoaded()
+      .done(function() {
+        console.log('All images successfully loaded.');
+      })
+      .fail(function() {
+        console.log('One or more images failed to load.');
+      })
+      .always(function() {
+        console.log('Images loaded (success or fail).');
+      });
+  });
 </script>
 
 <div class="mm-columns" id="gallery">
@@ -40,10 +61,13 @@
       <img
         class="mm-columns__img"
         loading="lazy"
-        data-src="{{ item.src_url }}"
-        src="assets/images/tort.jpg"
+        src="{{ item.src_url }}"
         onerror="this.src='assets/images/tort.jpg'"
         alt="{{ item.name }}"
+
+         <!-- data-src="{{ item.src_url }}" 
+        src="assets/images/tort.jpg"  -->
+
       />
     </a>
     <div class="overlay">{{ item.name }}</div>
