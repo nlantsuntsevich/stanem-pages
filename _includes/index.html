@@ -3,43 +3,34 @@
     const gallery = document.querySelector("#gallery");
     const lazyImages = document.querySelectorAll('img[data-src]');
     const masonryContainer = $('#gallery');
-    
-    // Function to trigger Masonry layout recalculation
-    const triggerMasonry = () => {
-      masonryContainer.masonry('layout');
-    };
 
-    // Initialize Masonry after all images have loaded
-    masonryContainer.imagesLoaded(function () {
+    // Initialize Masonry only after all images have loaded
+    const triggerMasonry = () => {
       masonryContainer.masonry({
         itemSelector: ".mm-columns__item",
         percentPosition: true,
       });
-    });
+    };
 
-    // Use IntersectionObserver to lazy-load images
+    // Lazy-load images using IntersectionObserver
     const imageObserver = new IntersectionObserver((entries, observer) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           const img = entry.target;
           img.src = img.dataset.src;
-          img.removeAttribute('data-src');
-
           img.onload = () => {
-            triggerMasonry();  // Recalculate Masonry layout
+            masonryContainer.masonry('layout');  // Recalculate Masonry layout
           };
-
-          observer.unobserve(img);  // Stop observing once loaded
+          observer.unobserve(img);
         }
       });
     });
 
-    // Observe each lazy image
     lazyImages.forEach(image => {
       imageObserver.observe(image);
     });
 
-    // Use MutationObserver to detect if any new images are added dynamically
+    // MutationObserver to detect new images dynamically
     const mutationObserver = new MutationObserver(() => {
       const newLazyImages = document.querySelectorAll('img[data-src]');
       newLazyImages.forEach(image => {
@@ -47,15 +38,18 @@
       });
     });
 
-    // Observe the gallery for changes (e.g., new images added)
+    // Observe the gallery for new image additions
     mutationObserver.observe(gallery, { childList: true, subtree: true });
+
+    // Initialize Masonry after all images are lazy-loaded and visible
+    $("#gallery").imagesLoaded(triggerMasonry);
   });
 </script>
 
 <div class="mm-columns" id="gallery">
   {% for item in site.data.index %}
   <div class="mm-columns__item">
-    <a href="{{ item.src_url}}" target="_blank">
+    <a href="{{ item.src_url }}" target="_blank">
       <img
         class="mm-columns__img"
         loading="lazy"
