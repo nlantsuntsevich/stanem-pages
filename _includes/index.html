@@ -4,14 +4,6 @@
     const lazyImages = document.querySelectorAll('img[data-src]');
     const masonryContainer = $('#gallery');
 
-    // Initialize Masonry only after all images have loaded
-    const triggerMasonry = () => {
-      masonryContainer.masonry({
-        itemSelector: ".mm-columns__item",
-        percentPosition: true,
-      });
-    };
-
     // Lazy-load images using IntersectionObserver
     const imageObserver = new IntersectionObserver((entries, observer) => {
       entries.forEach(entry => {
@@ -19,7 +11,7 @@
           const img = entry.target;
           img.src = img.dataset.src;
           img.onload = () => {
-            masonryContainer.masonry('layout');  // Recalculate Masonry layout
+            masonryContainer.masonry('layout');  // Recalculate Masonry layout after image loads
           };
           observer.unobserve(img);
         }
@@ -30,19 +22,13 @@
       imageObserver.observe(image);
     });
 
-    // MutationObserver to detect new images dynamically
-    const mutationObserver = new MutationObserver(() => {
-      const newLazyImages = document.querySelectorAll('img[data-src]');
-      newLazyImages.forEach(image => {
-        imageObserver.observe(image);
+    // Initialize Masonry after all images are lazy-loaded and visible
+    masonryContainer.imagesLoaded(function () {
+      masonryContainer.masonry({
+        itemSelector: ".mm-columns__item",
+        percentPosition: true,
       });
     });
-
-    // Observe the gallery for new image additions
-    mutationObserver.observe(gallery, { childList: true, subtree: true });
-
-    // Initialize Masonry after all images are lazy-loaded and visible
-    $("#gallery").imagesLoaded(triggerMasonry);
   });
 </script>
 
