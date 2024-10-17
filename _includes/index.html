@@ -1,4 +1,4 @@
-<!-- Initialize Masonry and Lazy Load Images
+// Initialize Masonry and Lazy Load Images
 <script>
   $(document).ready(function () {
     const masonryContainer = $('#gallery');
@@ -12,16 +12,16 @@
     });
 
     // Lazy-load images with IntersectionObserver
-    const lazyImages = document.querySelectorAll('img[data-src]');
+    const lazyImages = document.querySelectorAll('img[data-src_url]');
     const imageObserver = new IntersectionObserver((entries, observer) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           const img = entry.target;
-          img.src = img.dataset.src;
+          img.src = img.dataset.src_url;
           img.onload = () => {
             masonryContainer.masonry('layout');
           };
-          img.removeAttribute('data-src');
+          img.removeAttribute('data-src_url');
           observer.unobserve(img);  // Stop observing once image is loaded
         }
       });
@@ -31,7 +31,7 @@
       imageObserver.observe(image);
     });
   });
-</script> -->
+</script>
 
 <!-- <script>
   window.onload = function () {
@@ -60,7 +60,7 @@
 };
 </script> -->
 
-<script>
+<!-- <script>
   // init Masonry
 var $grid = $('.mm-columns').masonry({
   itemSelector: '.mm-columns__item',
@@ -71,7 +71,7 @@ var $grid = $('.mm-columns').masonry({
 $grid.imagesLoaded().progress( function() {
   $grid.masonry();
 }); 
-</script>
+</script> -->
 
 <div class="mm-columns" id="gallery">
   {% for item in site.data.index %}
@@ -93,5 +93,5 @@ $grid.imagesLoaded().progress( function() {
 </body>
 </html>
 
-         <!-- data-src="{{ item.src_url }}" 
+         <!-- data-src_url="{{ item.src_url }}" 
         src="assets/images/tort.jpg"  -->
