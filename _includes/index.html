@@ -17,6 +17,7 @@
         if (entry.isIntersecting) {
           const img = entry.target;
           img.src = img.dataset.src; // Load image from data-src
+          console.log(img.dataset.src);
           img.onload = () => {
             masonryContainer.masonry('layout'); // Layout Masonry after image loads
           };
