@@ -33,7 +33,7 @@
   });
 </script> -->
 
-<script>
+<!-- <script>
   window.onload = function () {
   const gallery = $('#gallery');
 
@@ -58,6 +58,19 @@
     console.log('No images found in the gallery.');
   }
 };
+</script> -->
+
+<script>
+  // init Masonry
+var $grid = $('.mm-columns').masonry({
+  itemSelector: '.mm-columns__item',
+  percentPosition: true,
+  columnWidth: '.mm-columns__sizer'
+});
+// layout Masonry after each image loads
+$grid.imagesLoaded().progress( function() {
+  $grid.masonry();
+}); 
 </script>
 
 <div class="mm-columns" id="gallery">
