@@ -1,4 +1,3 @@
-// Initialize Masonry and Lazy Load Images
 <script>
   $(document).ready(function () {
     const masonryContainer = $('#gallery');
@@ -80,7 +79,8 @@ $grid.imagesLoaded().progress( function() {
       <img
         class="mm-columns__img"
         loading="lazy"
-        src="{{ item.src_url }}"
+        data-src_url="{{ item.src_url }}
+        src="assets/images/tort.jpg"
         onerror="this.src='assets/images/tort.jpg'"
         alt="{{ item.name }}"
 
