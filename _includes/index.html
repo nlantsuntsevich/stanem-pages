@@ -32,45 +32,6 @@
   });
 </script>
 
-<!-- <script>
-  window.onload = function () {
-  const gallery = $('#gallery');
-
-  console.log(gallery); // Check if #gallery exists
-  console.log(gallery.find('img')); // Check if images are present in #gallery
-
-  // Ensure there are images before applying imagesLoaded
-  if (gallery.find('img').length) {
-    gallery.imagesLoaded()
-      .done(function() {
-        console.log('All images successfully loaded.');
-        // Initialize Masonry after all images are loaded
-        gallery.masonry({
-          itemSelector: ".mm-columns__item",
-          percentPosition: true,
-        });
-      })
-      .fail(function() {
-        console.log('One or more images failed to load.');
-      });
-  } else {
-    console.log('No images found in the gallery.');
-  }
-};
-</script> -->
-
-<!-- <script>
-  // init Masonry
-var $grid = $('.mm-columns').masonry({
-  itemSelector: '.mm-columns__item',
-  percentPosition: true,
-  columnWidth: '.mm-columns__sizer'
-});
-// layout Masonry after each image loads
-$grid.imagesLoaded().progress( function() {
-  $grid.masonry();
-}); 
-</script> -->
 
 <div class="mm-columns" id="gallery">
   {% for item in site.data.index %}
@@ -79,7 +40,7 @@ $grid.imagesLoaded().progress( function() {
       <img
         class="mm-columns__img"
         loading="lazy"
-        data-src="{{ item.src_url }}
+        data-src="{{ item.src_url }}"
         src="assets/images/tort.jpg"
         onerror="this.src='assets/images/tort.jpg'"
         alt="{{ item.name }}"
