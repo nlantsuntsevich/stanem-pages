@@ -11,12 +11,13 @@
     });
 
     // Lazy-load images with IntersectionObserver
-    const lazyImages = document.querySelectorAll('img[data-src]');
+    const lazyImages = document.querySelectorAll('img[data-src], img[data-src_url]');
     const imageObserver = new IntersectionObserver((entries, observer) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           const img = entry.target;
-          img.src = img.dataset.src; // Load image from data-src
+          const imgSrc = img.dataset.src || img.dataset.src_url;
+          img.src = imgSrc;
           console.log(img.dataset.src);
           img.onload = () => {
             masonryContainer.masonry('layout'); // Layout Masonry after image loads
