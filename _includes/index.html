@@ -16,12 +16,12 @@
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           const img = entry.target;
-          img.src = img.dataset.src;
+          img.src = img.dataset.src; // Load image from data-src
           img.onload = () => {
-            masonryContainer.masonry('layout');
+            masonryContainer.masonry('layout'); // Layout Masonry after image loads
           };
-          img.removeAttribute('data-src');
-          observer.unobserve(img);  // Stop observing once image is loaded
+          img.removeAttribute('data-src'); // Remove data-src once image is loaded
+          observer.unobserve(img); // Stop observing the image
         }
       });
     });
@@ -32,7 +32,6 @@
   });
 </script>
 
-
 <div class="mm-columns" id="gallery">
   {% for item in site.data.index %}
   <div class="mm-columns__item">
@@ -41,18 +40,12 @@
         class="mm-columns__img"
         loading="lazy"
         data-src="{{ item.src_url }}"
-        src="assets/images/tort.jpg"
+        src="assets/images/tort.jpg"  <!-- Fallback image -->
         onerror="this.src='assets/images/tort.jpg'"
         alt="{{ item.name }}"
-
       />
     </a>
     <div class="overlay">{{ item.name }}</div>
   </div>
   {% endfor %}
 </div>
-</body>
-</html>
-
-         <!-- data-src_url="{{ item.src_url }}" 
-        src="assets/images/tort.jpg"  -->
