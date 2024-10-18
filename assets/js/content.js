@@ -1,5 +1,7 @@
-// $("#gallery").imagesLoaded(function () {
-//   $("#gallery").masonry({
-//     itemSelector: ".mm-columns__item",
-//   });
-// });
+var $container = $('#galerry');
+$container.imagesLoaded(function(){
+  $container.masonry({
+    itemSelector : '.mm-columns__item',
+    percentPosition: true
+  });
+});
