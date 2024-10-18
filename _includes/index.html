@@ -1,5 +1,5 @@
 
-<div class="mm-columns" id="gallery">
+<div class="mm-columns" id="#gallery">
   {% for item in site.data.index %}
   <div class="mm-columns__item">
     <a href="{{ item.src_url }}" target="_blank">
@@ -12,3 +12,7 @@
         alt="{{ item.name }}"
       />
     </a>
+    <div class="overlay">{{ item.name }}</div>
+  </div>
+  {% endfor %}
+</div>
