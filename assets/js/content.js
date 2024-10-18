@@ -15,12 +15,12 @@ $(document).ready(function () {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         const img = entry.target;
-        img.src = img.dataset.src;
+        img.src = img.dataset.src;  // Set image source to data-src value
         img.onload = () => {
-          $grid.masonry('layout');
+          $grid.masonry('layout');  // Re-layout Masonry after image loads
         };
-        img.removeAttribute('data-src');
-        observer.unobserve(img);
+        img.removeAttribute('data-src');  // Remove the data-src attribute after loading
+        observer.unobserve(img);  // Stop observing once image is loaded
       }
     });
   });
@@ -29,4 +29,3 @@ $(document).ready(function () {
     imageObserver.observe(image);
   });
 });
-
