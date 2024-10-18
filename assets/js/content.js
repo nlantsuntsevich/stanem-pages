@@ -1,4 +1,5 @@
-var $grid = $('#gallery').imagesLoaded( function() {
+var $grid = $('.mm-columns').imagesLoaded( 
+function() {
     $grid.masonry({
       itemSelector: '.mm-columns__item',
       percentPosition: true
